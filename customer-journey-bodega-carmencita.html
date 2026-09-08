@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>El camino de Rosa — Customer Journey Map · Bodega Carmencita</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --chalk-bg:#1B3B2E;
+    --chalk-bg-2:#16302A;
+    --chalk-white:#F4F1E6;
+    --chalk-yellow:#F2C94C;
+    --paper:#FBF7EE;
+    --navy:#0B4DA2;
+    --navy-dark:#062F66;
+    --ink:#1E2A22;
+    --muted:#66705F;
+    --card:#FFFFFF;
+    --border:#E4E0D2;
+    --pos:#3E8A5D;
+    --neg:#C4593B;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .display{font-family:'Caveat', cursive;}
+
+  /* ---------- HERO / PIZARRA ---------- */
+  .hero{
+    background:
+      radial-gradient(120% 160% at 85% -10%, #234A3A 0%, transparent 55%),
+      linear-gradient(165deg, var(--chalk-bg) 0%, var(--chalk-bg-2) 100%);
+    color:var(--chalk-white);
+    padding:44px 24px 30px;
+    position:relative;
+  }
+  .hero-inner{max-width:1100px;margin:0 auto;}
+  .kicker{
+    font-size:14px;
+    color:var(--chalk-yellow);
+    font-weight:600;
+    margin:0 0 6px;
+  }
+  .hero h1{
+    font-family:'Caveat', cursive;
+    font-weight:700;
+    font-size:clamp(38px,6vw,58px);
+    line-height:1.05;
+    margin:0 0 10px;
+  }
+  .hero p.lede{
+    max-width:640px;
+    font-size:15.5px;
+    line-height:1.55;
+    color:#D8E4DC;
+    margin:0;
+  }
+
+  .persona{
+    margin-top:26px;
+    display:flex;
+    gap:16px;
+    align-items:flex-start;
+    background:rgba(244,241,230,0.07);
+    border:1px solid rgba(244,241,230,0.18);
+    border-radius:16px;
+    padding:16px 18px;
+    max-width:640px;
+  }
+  .persona .avatar{
+    width:52px;height:52px;border-radius:50%;
+    background:var(--chalk-yellow);
+    display:flex;align-items:center;justify-content:center;
+    font-size:24px;flex-shrink:0;
+  }
+  .persona h3{
+    margin:0 0 3px;
+    font-size:16px;
+    font-weight:700;
+    color:#fff;
+  }
+  .persona p{
+    margin:0;
+    font-size:13.5px;
+    line-height:1.5;
+    color:#CBD9CF;
+  }
+
+  /* ---------- ROAD ---------- */
+  .road-section{
+    background:linear-gradient(180deg, var(--chalk-bg-2) 0%, var(--chalk-bg) 100%);
+    padding:10px 0 8px;
+  }
+  .road-wrap{
+    max-width:1100px;
+    margin:0 auto;
+    padding:18px 12px 6px;
+    overflow-x:auto;
+  }
+  .road-labels{
+    display:flex;
+    justify-content:space-between;
+    max-width:1100px;
+    margin:0 auto;
+    padding:0 24px;
+    font-size:12px;
+    color:#9FB3A6;
+  }
+  .road-svg-holder{
+    position:relative;
+    min-width:760px;
+    height:300px;
+  }
+  .stop-btn{
+    position:absolute;
+    transform:translate(-50%,-50%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:6px;
+  }
+  .stop-dot{
+    width:38px;height:38px;
+    border-radius:50%;
+    background:var(--chalk-bg);
+    border:3px solid var(--chalk-white);
+    color:var(--chalk-white);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Inter',sans-serif;
+    font-weight:800;
+    font-size:14px;
+    transition:transform .15s ease, background .15s ease, border-color .15s ease;
+  }
+  .stop-btn.active .stop-dot{
+    background:var(--chalk-yellow);
+    border-color:var(--chalk-yellow);
+    color:var(--chalk-bg);
+    transform:scale(1.14);
+  }
+  .stop-btn:hover .stop-dot{transform:scale(1.08);}
+  .stop-name{
+    font-size:13px;
+    font-weight:700;
+    color:var(--chalk-white);
+    white-space:nowrap;
+    text-align:center;
+  }
+  .stop-emo{font-size:17px;margin-top:-2px;}
+
+  /* ---------- DETAIL ---------- */
+  main{max-width:1100px;margin:0 auto;padding:26px 20px 60px;}
+  .hint{
+    text-align:center;
+    color:var(--muted);
+    font-size:14px;
+    padding:30px 10px;
+  }
+  .detail{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:26px 26px 22px;
+    box-shadow:0 10px 30px rgba(11,77,162,0.06);
+  }
+  .detail-head{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding-bottom:16px;
+    margin-bottom:18px;
+    border-bottom:1px dashed var(--border);
+  }
+  .detail-num{
+    width:40px;height:40px;border-radius:50%;
+    background:var(--navy);
+    color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:15px;flex-shrink:0;
+  }
+  .detail-head h2{
+    font-family:'Caveat', cursive;
+    font-size:32px;
+    font-weight:700;
+    margin:0;
+    color:var(--navy-dark);
+    line-height:1;
+  }
+  .emo-pill{
+    margin-left:auto;
+    display:flex;align-items:center;gap:7px;
+    background:var(--sky,#EEF4F1);
+    padding:7px 13px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:600;
+    color:var(--ink);
+    flex-shrink:0;
+  }
+
+  .grid2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+  .block{
+    background:#FAFAF7;
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:15px 16px;
+  }
+  .block.full{grid-column:1/-1;}
+  .block h4{
+    margin:0 0 8px;
+    font-size:13.5px;
+    font-weight:700;
+    color:var(--navy-dark);
+    display:flex;align-items:center;gap:7px;
+  }
+  .block p, .block li{
+    margin:0;
+    font-size:13.5px;
+    line-height:1.55;
+    color:var(--ink);
+  }
+  .block ul{margin:0;padding-left:18px;}
+  .block ul li{margin-bottom:3px;}
+  .touch-cols{display:flex;gap:14px;flex-wrap:wrap;}
+  .touch-col{flex:1;min-width:150px;}
+  .touch-col .lab{font-size:11.5px;font-weight:700;color:var(--muted);margin-bottom:5px;}
+  .friccion{border-color:#E9C9BE;background:#FDF4F1;}
+  .friccion h4{color:var(--neg);}
+  .oportunidad{border-color:#CFE3D3;background:#F2F8F3;}
+  .oportunidad h4{color:var(--pos);}
+
+  .footnote{
+    max-width:1100px;
+    margin:0 auto 40px;
+    padding:0 20px;
+    font-size:12.5px;
+    color:var(--muted);
+    line-height:1.6;
+  }
+  .footnote b{color:var(--ink);}
+
+  @media (max-width:640px){
+    .grid2{grid-template-columns:1fr;}
+    .detail-head{flex-wrap:wrap;}
+    .emo-pill{margin-left:54px;}
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-inner">
+    <p class="kicker">E-Business · Diseño del recorrido del cliente — avance 1</p>
+    <h1>El camino de Rosa hasta la Bodega Carmencita</h1>
+    <p class="lede">Un primer trazado del Customer Journey Map del modelo click and mortar de la bodega: desde que Rosa se entera de que existe, hasta que vuelve a pedir. La forma del camino sube y baja según cómo se siente en cada tramo.</p>
+
+    <div class="persona">
+      <div class="avatar">🧍‍♀️</div>
+      <div>
+        <h3>Rosa Quispe, 34 años</h3>
+        <p>Vive a dos cuadras de la bodega, en Villa El Salvador. Trabaja todo el día y necesita comprar víveres rápido, sin hacer cola ni salir en su hora de almuerzo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="road-section">
+  <div class="road-labels">
+    <span>😊 mejor experiencia</span>
+    <span>😕 más fricción</span>
+  </div>
+  <div class="road-wrap">
+    <div class="road-svg-holder" id="roadHolder">
+      <svg id="roadSvg" viewBox="0 0 1200 300" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;">
+        <path id="roadPath" d="M100,124 C183,124 266,156 350,156 C433,156 516,108 600,108 C683,108 766,140 850,140 C933,140 1016,76 1100,76"
+          fill="none" stroke="#F4F1E6" stroke-width="3" stroke-dasharray="1 14" stroke-linecap="round" opacity="0.85"/>
+      </svg>
+      <div id="stopsLayer"></div>
+    </div>
+  </div>
+</section>
+
+<main>
+  <div id="hint" class="hint">👆 Toca cualquier parada del camino para ver esa etapa del recorrido.</div>
+  <div id="detail" class="detail" style="display:none;"></div>
+</main>
+
+<p class="footnote"><b>Nota:</b> esta es la primera versión del Customer Journey Map (evidencia inicial para sustentación). Aún falta profundizar UX/UI, omnicanalidad y estrategias de fidelización digital en las siguientes sesiones — no es el producto final.</p>
+
+<script>
+const STAGES = [
+  {
+    num: 1, id:"descubrimiento", name:"Descubrimiento", x:100, y:124,
+    emo:"Curiosidad tranquila", emoji:"🙂",
+    necesidad:"Saber que existe una opción de compra cercana y confiable, sin tener que buscar mucho.",
+    digital:["Estado de WhatsApp de la bodega con ofertas del día"],
+    fisico:["Cercanía del local", "Toldo azul y blanco reconocible", "Recomendación de vecinos (boca a boca)"],
+    friccion:"No siempre sabe si la bodega tiene lo que busca sin ir a verificar en persona.",
+    oportunidad:"Compartir el link del catálogo web por el estado de WhatsApp, para que se conozca la variedad sin necesidad de visitar la tienda.",
+    uxui:"La primera impresión construye confianza: usar el mismo azul institucional del toldo también en el catálogo digital.",
+    omnicanal:"La identidad visual (color, nombre, tono) debe verse igual en el local físico y en cualquier canal digital."
+  },
+  {
+    num: 2, id:"exploracion", name:"Exploración", x:350, y:156,
+    emo:"Duda leve", emoji:"😐",
+    necesidad:"Ver qué productos hay, con precios claros y categorías fáciles de recorrer.",
+    digital:["Abre el catálogo web desde el celular", "Filtra por categoría (abarrotes, bebidas, frescos, limpieza)"],
+    fisico:["Entra a la tienda y recorre los anaqueles"],
+    friccion:"El catálogo digital no siempre refleja el stock real del día: puede pedir algo que ya se agotó.",
+    oportunidad:"Un mensaje de bienvenida que aclare que el stock se confirma por WhatsApp antes de cerrar el pedido, para bajar la expectativa a tiempo.",
+    uxui:"Categorías en chips y grilla de 2 columnas: fácil de explorar con el pulgar, sin necesidad de manual.",
+    omnicanal:"El mismo orden de categorías del catálogo digital ayuda a ubicarse también entre los anaqueles físicos."
+  },
+  {
+    num: 3, id:"pedido", name:"Pedido", x:600, y:108,
+    emo:"Alivio", emoji:"🙂",
+    necesidad:"Que el pedido quede claro y sin errores de cantidades o precios.",
+    digital:["Arma el carrito en el catálogo web", "Botón \"Enviar pedido por WhatsApp\" genera el mensaje automáticamente"],
+    fisico:["Pide directamente al vendedor en el mostrador"],
+    friccion:"Si nadie le comparte el link, un cliente nuevo puede no enterarse de que el catálogo digital existe.",
+    oportunidad:"Un cartel físico en la tienda con un código QR al catálogo, para que el cliente presencial descubra el canal digital.",
+    uxui:"El mensaje de WhatsApp ya llega ordenado y armado: menos carga mental y menos errores de comunicación para ambos lados.",
+    omnicanal:"El mismo pedido puede empezar en digital y cerrarse en tienda (o al revés) sin perder la información ya escrita."
+  },
+  {
+    num: 4, id:"pago", name:"Pago y entrega", x:850, y:140,
+    emo:"Incertidumbre", emoji:"😕",
+    necesidad:"Sentir seguridad de que el pago fue recibido y que el pedido se va a cumplir.",
+    digital:["Pago por Yape o Plin", "Número compartido por WhatsApp"],
+    fisico:["Pago en efectivo en el mostrador", "Recojo en tienda o entrega a pie cerca de casa"],
+    friccion:"Todo depende de que la bodeguera confirme manualmente por WhatsApp que recibió el Yape o Plin; no hay recibo automático.",
+    oportunidad:"Un mensaje estándar de confirmación (\"pedido recibido, pago confirmado, listo en 15 min\") que dé tranquilidad sin depender de que se acuerden de escribirlo.",
+    uxui:"La nota debajo del botón de enviar ya explica que el pago se coordina aparte: reduce la sorpresa antes de que ocurra.",
+    omnicanal:"La confirmación debería sentirse igual de confiable sea el pedido digital o el presencial."
+  },
+  {
+    num: 5, id:"fidelizacion", name:"Fidelización", x:1100, y:76,
+    emo:"Cercanía y satisfacción", emoji:"❤️",
+    necesidad:"Sentirse reconocida, no como un pedido más entre muchos.",
+    digital:["El WhatsApp de la bodega queda guardado como contacto", "Catálogo web accesible desde el navegador para el próximo pedido"],
+    fisico:["Trato cercano y personal del vendedor, típico de bodega de barrio"],
+    friccion:"No hay ningún incentivo formal para volver a pedir por el canal digital; podría volver solo a lo presencial.",
+    oportunidad:"Pequeños gestos de fidelización digital: agradecimiento personalizado, aviso de productos nuevos por WhatsApp, algún descuento por reordenar desde el catálogo.",
+    uxui:"Consistencia de tono y color en cada interacción refuerza que se trata de la misma bodega de confianza.",
+    omnicanal:"El vínculo humano de la tienda física es la base; lo digital debe extender esa cercanía, no reemplazarla."
+  }
+];
+
+const stopsLayer = document.getElementById("stopsLayer");
+const detailEl = document.getElementById("detail");
+const hintEl = document.getElementById("hint");
+
+STAGES.forEach(s => {
+  const btn = document.createElement("button");
+  btn.className = "stop-btn";
+  btn.id = "stop-" + s.id;
+  const leftPct = (s.x / 1200) * 100;
+  const topPct = (s.y / 300) * 100;
+  btn.style.left = leftPct + "%";
+  btn.style.top = topPct + "%";
+  btn.innerHTML = `
+    <span class="stop-name">${s.name}</span>
+    <span class="stop-dot">${s.num}</span>
+    <span class="stop-emo">${s.emoji}</span>
+  `;
+  btn.onclick = () => selectStage(s.id);
+  stopsLayer.appendChild(btn);
+});
+
+function selectStage(id){
+  const s = STAGES.find(st => st.id === id);
+  document.querySelectorAll(".stop-btn").forEach(b => b.classList.remove("active"));
+  document.getElementById("stop-" + id).classList.add("active");
+
+  hintEl.style.display = "none";
+  detailEl.style.display = "block";
+  detailEl.innerHTML = `
+    <div class="detail-head">
+      <div class="detail-num">${s.num}</div>
+      <h2>${s.name}</h2>
+      <div class="emo-pill">${s.emoji} ${s.emo}</div>
+    </div>
+    <div class="grid2">
+      <div class="block">
+        <h4>💭 Necesidad y expectativa</h4>
+        <p>${s.necesidad}</p>
+      </div>
+      <div class="block">
+        <h4>📱 Puntos de contacto</h4>
+        <div class="touch-cols">
+          <div class="touch-col">
+            <div class="lab">Digital</div>
+            <ul>${s.digital.map(d => `<li>${d}</li>`).join("")}</ul>
+          </div>
+          <div class="touch-col">
+            <div class="lab">Físico</div>
+            <ul>${s.fisico.map(d => `<li>${d}</li>`).join("")}</ul>
+          </div>
+        </div>
+      </div>
+      <div class="block friccion">
+        <h4>⚠️ Fricción</h4>
+        <p>${s.friccion}</p>
+      </div>
+      <div class="block oportunidad">
+        <h4>💡 Oportunidad de mejora</h4>
+        <p>${s.oportunidad}</p>
+      </div>
+      <div class="block">
+        <h4>🎨 UX/UI</h4>
+        <p>${s.uxui}</p>
+      </div>
+      <div class="block">
+        <h4>🔄 Omnicanalidad</h4>
+        <p>${s.omnicanal}</p>
+      </div>
+    </div>
+  `;
+}
+
+selectStage("descubrimiento");
+</script>
+</body>
+</html>
